@@ -212,7 +212,8 @@ resource "google_project_iam_member" "ai_notebook_user_role2" {
 #   depends_on = [time_sleep.wait_120_seconds]
 # }
 
-resource "google_notebooks_instance" "instance" {
+# resource "google_notebooks_instance" "instance" {
+resource "google_notebooks_instance" "ai_notebook" {
   count        = var.notebook_count
   project      = local.project.project_id
   name         = "notebooks-instance-${count.index}"
@@ -226,7 +227,7 @@ resource "google_notebooks_instance" "instance" {
     repository = var.container_image_repo #"gcr.io/deeplearning-platform-release/base-cpu"
     tag = "latest"
   }
-    service_account = google_service_account.sa_p_notebook.email
+  service_account = google_service_account.sa_p_notebook.email
 
   install_gpu_driver = false
   boot_disk_type     = var.boot_disk_type
