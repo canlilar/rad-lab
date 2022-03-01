@@ -1,4 +1,4 @@
-# RAD Lab Data Science Module
+# RAD Lab SRA-Toolkit Module
 
 ## GCP Products/Services 
 
