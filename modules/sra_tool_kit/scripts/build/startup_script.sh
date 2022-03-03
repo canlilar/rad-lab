@@ -36,10 +36,10 @@ export PROJECT_ID=$(gcloud config get-value project)
 
 # Install the necessary requirements
 echo "Installing the SRA toolkit plus some additional requirements"
-conda install -c bioconda sra-tools
-conda install -c bioconda entrez-direct
-conda install -c bioconda ipyrad
-conda install -c conda-forge toytree
+conda install -c bioconda sra-tools -y
+conda install -c bioconda entrez-direct -y
+conda install -c bioconda ipyrad -y
+conda install -c conda-forge toytree -y
 
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
