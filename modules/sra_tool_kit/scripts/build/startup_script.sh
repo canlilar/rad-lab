@@ -16,18 +16,19 @@
 
 # Create dir for sample notebooks
 echo "Creating directory to store samples."
-mkdir -p sample/bigquery-public-data
+# mkdir -p sample/bigquery-public-data
+mkdir -p sample/sra_tool_kit
 
 # Setting environment variabled for Project ID
 echo "Setting Project ID variable."
 export PROJECT_ID=$(gcloud config get-value project)
 
 # install anaconda
-echo "Installing Miniconda"
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh 
-bash Miniconda3-py39_4.10.3-Linux-x86_64.sh
+# echo "Installing Miniconda"
+# wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh 
+# bash Miniconda3-py39_4.10.3-Linux-x86_64.sh
 # you have to restart the shell after this step
-exec "$ScriptLoc"
+# exec "$ScriptLoc"
 
 # do we need to create a virtual env? 
 # conda create -n sraenv python=3.7
@@ -42,7 +43,7 @@ conda install -c conda-forge toytree
 
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
-gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_tutorial.ipynb /home/jupyter/sample/biodata/SRA_Toolkit_tutorial.ipynb
+gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_tutorial.ipynb /home/jupyter/sample/sra_tool_kit/SRA_Toolkit_tutorial.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/BigQuery_tutorial.ipynb /home/jupyter/sample/bigquery-public-data/BigQuery_tutorial.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/Exploring_gnomad_on_BigQuery.ipynb /home/jupyter/sample/bigquery-public-data/Exploring_gnomad_on_BigQuery.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/Quantum_Simulation_qsimcirq.ipynb /home/jupyter/sample/bigquery-public-data/Quantum_Simulation_qsimcirq.ipynb

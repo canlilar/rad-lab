@@ -83,7 +83,7 @@ variable "ip_cidr_range" {
 variable "machine_type" {
   description = "Type of VM you would like to spin up"
   type        = string
-  default     = "n1-standard-1" #"e2-medium"
+  default     = "e2-medium"
 }
 
 variable "network_name" {
@@ -107,7 +107,7 @@ variable "organization_id" {
 variable "project_name" {
   description = "Project name or ID, if it's an existing project."
   type        = string
-  default     = "radlab-data-science"
+  default     = "radlab-sra-toolkit"
 }
 
 variable "random_id" {
