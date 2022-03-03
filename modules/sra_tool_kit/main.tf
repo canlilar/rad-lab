@@ -239,8 +239,8 @@ resource "google_notebooks_instance" "ai_notebook" {
   network = local.network.self_link
   subnet  = local.subnet.self_link
 
-  # post_startup_script = format("gs://%s/%s", google_storage_bucket.user_scripts_bucket.name,google_storage_bucket_object.notebook_post_startup_script.name)
-  post_startup_script = "${path.module}/scripts/build/startup_script.sh"
+  post_startup_script = format("gs://%s/%s", google_storage_bucket.user_scripts_bucket.name,google_storage_bucket_object.notebook_post_startup_script.name)
+  # post_startup_script = "${path.module}/scripts/build/startup_script.sh"
 
   labels = {
     module = "sra_tool_kit"
