@@ -23,23 +23,12 @@ mkdir -p sample/sra_tool_kit
 echo "Setting Project ID variable."
 export PROJECT_ID=$(gcloud config get-value project)
 
-# install anaconda
-# echo "Installing Miniconda"
-# wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh 
-# bash Miniconda3-py39_4.10.3-Linux-x86_64.sh
-# you have to restart the shell after this step
-# exec "$ScriptLoc"
-
-# do we need to create a virtual env? 
-# conda create -n sraenv python=3.7
-# $ conda activate sraenv
-
 # Install the necessary requirements
-echo "Installing the SRA toolkit plus some additional requirements"
-conda install -c bioconda sra-tools -y
-conda install -c bioconda entrez-direct -y
-conda install -c bioconda ipyrad -y
-conda install -c conda-forge toytree -y
+# echo "Installing the SRA toolkit plus some additional requirements"
+# conda install -c bioconda sra-tools -y
+# conda install -c bioconda entrez-direct -y
+# conda install -c bioconda ipyrad -y
+# conda install -c conda-forge toytree -y
 
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
