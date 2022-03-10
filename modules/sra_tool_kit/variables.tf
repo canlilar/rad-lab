@@ -65,7 +65,7 @@ variable "image_family" {
 variable "container_image_repo" {
   description = "Container image of the AI notebook."
   type        = string
-  default     = "gcr.io/deeplearning-platform-release/base-cpu"
+  default     = "gcr.io/deeplearning-platform-release/sklearn-cpu"#"gcr.io/deeplearning-platform-release/base-cpu"
 }
 
 variable "image_project" {
