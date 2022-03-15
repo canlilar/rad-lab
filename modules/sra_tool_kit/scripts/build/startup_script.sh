@@ -33,6 +33,7 @@ export PROJECT_ID=$(gcloud config get-value project)
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
 gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_tutorial.ipynb /home/jupyter/sample/sra_tool_kit/SRA_Toolkit_tutorial.ipynb
+gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_Example1.ipynb /home/jupyter/sample/sra_tool_kit/SRA_Toolkit_tutorial.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/BigQuery_tutorial.ipynb /home/jupyter/sample/bigquery-public-data/BigQuery_tutorial.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/Exploring_gnomad_on_BigQuery.ipynb /home/jupyter/sample/bigquery-public-data/Exploring_gnomad_on_BigQuery.ipynb
 # gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/Quantum_Simulation_qsimcirq.ipynb /home/jupyter/sample/bigquery-public-data/Quantum_Simulation_qsimcirq.ipynb
