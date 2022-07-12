@@ -33,18 +33,12 @@
 #   bucket = google_storage_bucket.user_scripts_bucket.name
 # }
 
-resource "google_storage_bucket_object" "notebook" {
-  name   = "notebooks/SRA_Toolkit_tutorial.ipynb"
-  source = "${path.module}/scripts/build/SRA_Toolkit_tutorial.ipynb"
+resource "google_storage_bucket_object" "notebooks" {
+  for_each = fileset("${path.module}/scripts/build/", "notebooks/*.ipynb")
+  name     = each.value
+  source = join("/", ["${path.module}/scripts/build", each.value])
   bucket = google_storage_bucket.user_scripts_bucket.name
 }
-
-# The "notebook" part needs to be unique
-# resource "google_storage_bucket_object" "notebook" {
-#   name   = "notebooks/SRA_Toolkit_DockerDownload.ipynb"
-#   source = "${path.module}/scripts/build/SRA_Toolkit_DockerDownload.ipynb"
-#   bucket = google_storage_bucket.user_scripts_bucket.name
-# }
 
 resource "google_storage_bucket_object" "notebook_post_startup_script" {
   name   = "notebooks/startup_script.sh"
