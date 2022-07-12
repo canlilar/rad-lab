@@ -30,6 +30,7 @@ export PROJECT_ID=$(gcloud config get-value project)
 # conda install -c bioconda ipyrad -y
 # conda install -c conda-forge toytree -y
 
+
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
 gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_tutorial.ipynb /home/jupyter/sample/sra_tool_kit/SRA_Toolkit_tutorial.ipynb
