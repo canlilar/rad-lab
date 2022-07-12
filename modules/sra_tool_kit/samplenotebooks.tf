@@ -39,11 +39,12 @@ resource "google_storage_bucket_object" "notebook" {
   bucket = google_storage_bucket.user_scripts_bucket.name
 }
 
-resource "google_storage_bucket_object" "notebook" {
-  name   = "notebooks/SRA_Toolkit_DockerDownload.ipynb"
-  source = "${path.module}/scripts/build/SRA_Toolkit_DockerDownload.ipynb"
-  bucket = google_storage_bucket.user_scripts_bucket.name
-}
+# The "notebook" part needs to be unique
+# resource "google_storage_bucket_object" "notebook" {
+#   name   = "notebooks/SRA_Toolkit_DockerDownload.ipynb"
+#   source = "${path.module}/scripts/build/SRA_Toolkit_DockerDownload.ipynb"
+#   bucket = google_storage_bucket.user_scripts_bucket.name
+# }
 
 resource "google_storage_bucket_object" "notebook_post_startup_script" {
   name   = "notebooks/startup_script.sh"
