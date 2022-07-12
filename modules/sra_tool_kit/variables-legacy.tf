@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,12 +31,6 @@ variable "boot_disk_type" {
   default     = "PD_SSD"
 }
 
-variable "create_container_image" {
-  description = "If the notebook needs to have image type as Container set this variable to true, set it to false when using dafault image type i.e. VM."
-  type        = bool
-  default     = false
-}
-
 variable "create_network" {
   description = "If the module has to be deployed in an existing network, set this variable to false."
   type        = bool
@@ -47,24 +41,6 @@ variable "create_project" {
   description = "Set to true if the module has to create a project.  If you want to deploy in an existing project, set this variable to false."
   type        = bool
   default     = true
-}
-
-variable "container_image_repository" {
-  description = "Container Image Repo, only set if creating container image notebook instance by setting `create_container_image` variable to true"
-  type        = string
-  default     = ""
-}
-
-variable "container_image_tag" {
-  description = "Container Image Tag, only set if creating container image notebook instance by setting `create_container_image` variable to true"
-  type        = string
-  default     = "latest"
-}
-
-variable "enable_gpu_driver" {
-  description = "Install GPU driver on the instance"
-  type        = bool
-  default     = false
 }
 
 variable "enable_services" {
@@ -78,23 +54,18 @@ variable "folder_id" {
   type        = string
   default     = ""
 }
-
-variable "gpu_accelerator_type" {
-  description = "Type of GPU you would like to spin up"
-  type        = string
-  default     = ""
-}
-
-variable "gpu_accelerator_core_count" {
-  description = "Number of of GPU core count"
-  type        = number
-  default     = null
-}
-
+# Should we variablize this?
 variable "image_family" {
   description = "Image of the AI notebook."
   type        = string
   default     = "tf-latest-cpu"
+}
+
+# Here's a complete list: https://cloud.google.com/deep-learning-containers/docs/choosing-container
+variable "container_image_repo" {
+  description = "Container image of the AI notebook."
+  type        = string
+  default     = "gcr.io/deeplearning-platform-release/sklearn-cpu"#"gcr.io/deeplearning-platform-release/base-cpu"
 }
 
 variable "image_project" {
@@ -112,7 +83,7 @@ variable "ip_cidr_range" {
 variable "machine_type" {
   description = "Type of VM you would like to spin up"
   type        = string
-  default     = "n1-standard-1"
+  default     = "e2-medium"
 }
 
 variable "network_name" {
@@ -136,7 +107,7 @@ variable "organization_id" {
 variable "project_name" {
   description = "Project name or ID, if it's an existing project."
   type        = string
-  default     = "radlab-data-science"
+  default     = "radlab-sra-toolkit"
 }
 
 variable "random_id" {

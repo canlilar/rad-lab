@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,8 @@ locals {
     "roles/compute.instanceAdmin",
     "roles/notebooks.admin",
     "roles/bigquery.user",
-    "roles/storage.objectViewer"
+    "roles/storage.objectViewer",
+    "roles/iam.serviceAccountUser"
   ]
 
   project_services = var.enable_services ? [
@@ -175,61 +176,41 @@ resource "google_project_iam_member" "ai_notebook_user_role2" {
   role     = "roles/viewer"
 }
 
-# resource "google_notebooks_instance" "ai_notebook" {
-#   count        = var.notebook_count
-#   project      = local.project.project_id
-#   name         = "notebooks-instance-${count.index}"
-#   location     = var.zone
-#   machine_type = var.machine_type
-
-#   vm_image {
-#     project      = var.image_project
-#     image_family = var.image_family
-#   }
-
-#   service_account = google_service_account.sa_p_notebook.email
-
-#   install_gpu_driver = false
-#   boot_disk_type     = var.boot_disk_type
-#   boot_disk_size_gb  = var.boot_disk_size_gb
-
-#   no_public_ip    = false
-#   no_proxy_access = false
-
-#   network = local.network.self_link
-#   subnet  = local.subnet.self_link
-
-#   post_startup_script = format("gs://%s/%s", google_storage_bucket.user_scripts_bucket.name,google_storage_bucket_object.notebook_post_startup_script.name)
-
-#   labels = {
-#     module = "data-science"
-#   }
-
-#   metadata = {
-#     terraform  = "true"
-#     proxy-mode = "mail"
-#   }
-#   depends_on = [time_sleep.wait_120_seconds]
-# }
-
-# resource "google_notebooks_instance" "instance" {
 resource "google_notebooks_instance" "ai_notebook" {
   count        = var.notebook_count
   project      = local.project.project_id
   name         = "notebooks-instance-${count.index}"
   location     = var.zone
-  machine_type = var.machine_type 
-  # metadata = {
-  #   proxy-mode = "service_account"
-  #   terraform  = "true"
-  # }
-  container_image {
-    repository = var.container_image_repo #"gcr.io/deeplearning-platform-release/base-cpu"
-    tag = "latest"
+  machine_type = var.machine_type
+
+  dynamic "vm_image" {
+    for_each = var.create_container_image ? [] : [1]
+    content {
+      project      = var.image_project
+      image_family = var.image_family
+    }
   }
+
+  dynamic "container_image" {
+    for_each = var.create_container_image ? [1] : []
+    content {
+      repository = var.container_image_repository
+      tag = var.container_image_tag
+    }
+  }
+
+  install_gpu_driver = var.enable_gpu_driver
+
+  dynamic "accelerator_config"{
+    for_each = var.enable_gpu_driver ? [1] : []
+    content {
+      type         = var.gpu_accelerator_type
+      core_count   = var.gpu_accelerator_core_count
+    }
+  }
+
   service_account = google_service_account.sa_p_notebook.email
 
-  install_gpu_driver = false
   boot_disk_type     = var.boot_disk_type
   boot_disk_size_gb  = var.boot_disk_size_gb
 
@@ -240,17 +221,19 @@ resource "google_notebooks_instance" "ai_notebook" {
   subnet  = local.subnet.self_link
 
   post_startup_script = format("gs://%s/%s", google_storage_bucket.user_scripts_bucket.name,google_storage_bucket_object.notebook_post_startup_script.name)
-  # post_startup_script = "${path.module}/scripts/build/startup_script.sh"
 
   labels = {
-    module = "sra_tool_kit"
+    module = "data-science"
   }
 
   metadata = {
     terraform  = "true"
     proxy-mode = "mail"
   }
-  depends_on = [time_sleep.wait_120_seconds]
+  depends_on = [
+    time_sleep.wait_120_seconds,
+    google_storage_bucket_object.notebooks
+    ]
 }
 
 resource "google_storage_bucket" "user_scripts_bucket" {
