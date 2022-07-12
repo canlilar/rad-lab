@@ -16,30 +16,15 @@
 
 # Create dir for sample notebooks
 echo "Creating directory to store samples."
-# mkdir -p sample/bigquery-public-data
-mkdir -p sample/sra_tool_kit
+mkdir -p /home/jupyter/sample/notebooks
 
 # Setting environment variabled for Project ID
 echo "Setting Project ID variable."
 export PROJECT_ID=$(gcloud config get-value project)
 
-# Install the necessary requirements
-# echo "Installing the SRA toolkit plus some additional requirements"
-# conda install -c bioconda sra-tools -y
-# conda install -c bioconda entrez-direct -y
-# conda install -c bioconda ipyrad -y
-# conda install -c conda-forge toytree -y
-
-
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
-gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_tutorial.ipynb /home/jupyter/SRA_Toolkit_tutorial.ipynb
-gsutil cp gs://user-scripts-${PROJECT_ID}/notebooks/SRA_Toolkit_Example1.ipynb /home/jupyter/SRA_Toolkit_Example1.ipynb
-# This one didn't work
-gsutil cp -R gs://user-scripts-${PROJECT_ID}/notebooks/hypothesis-driven-SRA-queries /home/jupyter/hypothesis-driven-SRA-queries
-# Extract Data
-tar -xf /home/jupyter/sample/sra_tool_kit/hypothesis-driven-SRA-queries/data.tar.gz
-
+gsutil -m cp -r gs://user-scripts-${PROJECT_ID}/notebooks/*.ipynb /home/jupyter/sample/notebooks
 
 echo "Startup script finished."
 
@@ -50,3 +35,4 @@ echo "Startup script finished."
 # wget https://raw.githubusercontent.com/GoogleCloudPlatform/ai-platform-samples/master/notebooks/tools/auto-shutdown/ashutdown
 
 # ./install.sh
+
