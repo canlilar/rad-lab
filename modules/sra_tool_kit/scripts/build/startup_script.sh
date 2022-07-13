@@ -24,7 +24,8 @@ export PROJECT_ID=$(gcloud config get-value project)
 
 # Copy samples to the notebook
 echo "Copying sample notebooks to the instance."
-gsutil -m cp -r gs://user-scripts-${PROJECT_ID}/notebooks/*.ipynb /home/jupyter/sample/notebooks
+# gsutil -m cp -r gs://user-scripts-${PROJECT_ID}/notebooks/*.ipynb /home/jupyter/sample/notebooks
+gsutil -m cp -r gs://user-scripts-${PROJECT_ID}/notebooks/*.ipynb /home/jupyter/
 
 echo "Startup script finished."
 
